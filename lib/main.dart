@@ -3,41 +3,39 @@ import 'package:audioplayers/audioplayers.dart';
 
 void main() => runApp(XylophoneApp());
 
-void playSound(int soundNumber) {
-  final player = AudioCache();
-  player.play("note$soundNumber.wav");
-}
-
-Widget keySound(int noteNumber, MaterialColor noteColor) {
-  return Expanded(
-    child: MaterialButton(
-      onPressed: () {
-        playSound(noteNumber);
-      },
-      color: noteColor,
-      child: Container(),
-    ),
-  );
-}
-
 class XylophoneApp extends StatelessWidget {
+  void playSound(int soundNumber) {
+    final player = AudioCache();
+    player.play('note$soundNumber.wav');
+  }
+
+  Expanded buildKey({Color color, int soundNumber}) {
+    return Expanded(
+      child: MaterialButton(
+        color: color,
+        onPressed: () {
+          playSound(soundNumber);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //removing the debug banner
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              keySound(1, Colors.red),
-              keySound(2, Colors.orange),
-              keySound(3, Colors.yellow),
-              keySound(4, Colors.green),
-              keySound(5, Colors.teal),
-              keySound(6, Colors.blue),
-              keySound(7, Colors.purple),
+              buildKey(color: Colors.red, soundNumber: 1),
+              buildKey(color: Colors.orange, soundNumber: 2),
+              buildKey(color: Colors.yellow, soundNumber: 3),
+              buildKey(color: Colors.green, soundNumber: 4),
+              buildKey(color: Colors.teal, soundNumber: 5),
+              buildKey(color: Colors.blue, soundNumber: 6),
+              buildKey(color: Colors.purple, soundNumber: 7),
             ],
           ),
         ),
